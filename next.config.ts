@@ -5,10 +5,10 @@ const repository = process.env.GITHUB_REPOSITORY ?? "";
 const repoName = repository.split("/")[1] ?? "";
 const isUserOrOrgSite = repoName.endsWith(".github.io");
 
-const configuredBasePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+const configuredBasePath = process.env.NEXT_PUBLIC_BASE_PATH;
 const autoBasePath =
   isGitHubActions && repoName && !isUserOrOrgSite ? `/${repoName}` : "";
-const basePath = configuredBasePath || autoBasePath;
+const basePath = configuredBasePath ?? autoBasePath;
 
 const nextConfig: NextConfig = {
   output: "export",

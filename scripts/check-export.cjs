@@ -15,7 +15,13 @@ for (const page of ["index.html", "privacy/index.html", "terms/index.html", "con
     checked++;
   }
 }
+const landing = fs.readFileSync(path.join(root, "index.html"), "utf8");
+assert(landing.includes('src="' + prefix + '/images/pouch-landing-body.png"'), "Pouch URL must include the deployment base path");
+assert(fs.existsSync(path.join(root, "images/pouch-landing-body.png")), "Pouch artwork must be exported");
 const manifest = JSON.parse(fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"));
-for (const icon of manifest.icons) assert(fs.existsSync(path.join(root, icon.src)), "Missing manifest icon");
+for (const icon of manifest.icons) {
+  const file = icon.src.startsWith(prefix + "/") ? icon.src.slice(prefix.length) : icon.src;
+  assert(fs.existsSync(path.join(root, file)), "Missing manifest icon");
+}
 for (const gallery of ["index.html", "brand-assets.html", "charts.html", "prototypes.html"]) assert(fs.existsSync(path.join(root, "branding", gallery)));
 console.log("Passed: " + checked + " exported links/assets, manifest icons and branding galleries.");

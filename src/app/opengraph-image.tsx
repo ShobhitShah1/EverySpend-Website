@@ -19,46 +19,51 @@ export default function OpenGraphImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#1C1917",
-          backgroundImage:
-            "radial-gradient(circle at 20% 10%, rgba(187,182,179,0.28), transparent 45%), radial-gradient(circle at 85% 90%, rgba(167,243,208,0.22), transparent 40%)",
-          color: "#FAFAF9",
+          backgroundColor: "#fafaf9",
+          color: "#1c1c1c",
           padding: "72px",
-          fontFamily: "Poppins, Arial, sans-serif",
+          fontFamily: "Arial, sans-serif",
         }}
       >
         <div
           style={{
             display: "flex",
             alignItems: "center",
-            gap: "10px",
-            border: "1px solid rgba(255,255,255,0.2)",
-            borderRadius: "999px",
-            padding: "10px 18px",
+            gap: "8px",
             fontSize: 20,
-            color: "#D6D3D1",
+            color: "#1c1c1c",
             alignSelf: "flex-start",
           }}
         >
           EverySpend
+          <span
+            style={{
+              width: 7,
+              height: 7,
+              marginTop: -14,
+              borderRadius: "50%",
+              backgroundColor: "#8c9c90",
+            }}
+          />
         </div>
 
-        <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
+        <div style={{ display: "flex", flexDirection: "column", gap: "18px" }}>
           <div
             style={{
               display: "flex",
               flexDirection: "column",
-              fontSize: 78,
-              fontWeight: 700,
+              fontSize: 76,
+              fontWeight: 400,
               lineHeight: 1.05,
+              fontFamily: "Arial, sans-serif",
             }}
           >
-            Track smarter.
+            A clearer view
             <br />
-            Save better.
+            of your money.
           </div>
-          <div style={{ fontSize: 32, color: "#A8A29E", lineHeight: 1.35 }}>
-            Privacy-first expense tracking with on-device SMS parsing.
+          <div style={{ fontSize: 26, color: "#62625f", lineHeight: 1.35 }}>
+            An Android expense tracker with manual entry and optional on-device SMS import.
           </div>
         </div>
 
@@ -66,13 +71,15 @@ export default function OpenGraphImage() {
           style={{
             display: "flex",
             justifyContent: "space-between",
-            fontSize: 24,
-            color: "#BBB6B3",
+            borderTop: "1px solid #d7d5cc",
+            paddingTop: 18,
+            fontSize: 18,
+            color: "#687766",
           }}
         >
-          <span>Local-first</span>
-          <span>No cloud sync</span>
-          <span>Smart insights</span>
+          <span>ANDROID APP</span>
+          <span>MANUAL ENTRY</span>
+          <span>OPTIONAL SMS IMPORT</span>
         </div>
       </div>
     ),

@@ -1,0 +1,77 @@
+import { Image } from "expo-image";
+import { useEffect } from "react";
+import { StyleSheet, View } from "react-native";
+import Animated, {
+  Easing,
+  FadeOut,
+  useAnimatedStyle,
+  useSharedValue,
+  withRepeat,
+  withSequence,
+  withTiming,
+} from "react-native-reanimated";
+
+// Use bootsplash manifest and logo for seamless transition
+const manifest = require("../../../assets/bootsplash/manifest.json");
+const logo = require("../../../assets/bootsplash/logo.png");
+
+export function CustomSplashScreen() {
+  const scale = useSharedValue(1);
+  const opacity = useSharedValue(1);
+
+  useEffect(() => {
+    // Subtle breathing animation
+    scale.value = withRepeat(
+      withSequence(
+        withTiming(1.05, { duration: 1200, easing: Easing.inOut(Easing.ease) }),
+        withTiming(1, { duration: 1200, easing: Easing.inOut(Easing.ease) }),
+      ),
+      -1,
+      true,
+    );
+    opacity.value = withRepeat(
+      withSequence(
+        withTiming(1, { duration: 1200 }),
+        withTiming(0.85, { duration: 1200 }),
+      ),
+      -1,
+      true,
+    );
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    transform: [{ scale: scale.value }],
+    opacity: opacity.value,
+  }));
+
+  return (
+    <View style={[styles.container, { backgroundColor: manifest.background }]}>
+      <Animated.View
+        exiting={FadeOut.duration(300)}
+        style={[styles.logoContainer, animatedStyle]}
+      >
+        <Image
+          source={logo}
+          style={{
+            width: manifest.logo.width,
+            height: manifest.logo.height,
+          }}
+          contentFit="contain"
+        />
+      </Animated.View>
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: {
+    ...StyleSheet.absoluteFill,
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 99999,
+  },
+  logoContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});

@@ -1,34 +1,18 @@
 import Link from "next/link";
-import { CONTACT_EMAIL } from "@/lib/site";
 
 export function Footer() {
   return (
-    <footer className="border-t border-[var(--border)] bg-[var(--bg-surface)]/20 py-12">
-      <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-4 md:flex-row">
-        <div className="text-center md:text-left">
-          <h3 className="text-2xl font-bold text-[var(--text-primary)]">EverySpend</h3>
-          <p className="mt-2 text-sm text-[var(--text-muted)]">
-            (c) 2026 EverySpend Inc. All rights reserved.
-          </p>
-        </div>
-
-        <div className="flex gap-8 text-sm text-[var(--text-secondary)]">
-          <Link href="/privacy" className="transition-colors hover:text-[var(--primary)]">
-            Privacy Policy
-          </Link>
-          <Link href="/terms" className="transition-colors hover:text-[var(--primary)]">
-            Terms of Service
-          </Link>
-          <Link href="/contact" className="transition-colors hover:text-[var(--primary)]">
-            Contact
-          </Link>
-          <a
-            href={`mailto:${CONTACT_EMAIL}`}
-            className="transition-colors hover:text-[var(--primary)]"
-          >
-            Email
-          </a>
-        </div>
+    <footer className="site-footer">
+      <div className="footer-inner content-wrap">
+        <Link className="wordmark" href="/">
+          EverySpend<span aria-hidden="true" />
+        </Link>
+        <p>Made for the everyday.</p>
+        <nav aria-label="Footer">
+          <Link href="/privacy">Privacy</Link>
+          <Link href="/terms">Terms</Link>
+          <Link href="/contact">Contact</Link>
+        </nav>
       </div>
     </footer>
   );

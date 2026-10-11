@@ -1,52 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EverySpend website
 
-## Getting Started
+Minimal Next.js website with the ivory and charcoal palette, local Albert Sans typography, and approved pouch illustrations.
 
-First, run the development server:
+The home page includes a centered introduction and compact pouch artwork, an interactive example spending selector with expense and category views, a manual/SMS setup switch, FAQs, and an Android download link. Example amounts are labeled. Reduced-motion preferences disable movement.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+Contact, privacy, and terms share the same visual style. Existing policy sections and the contact submission flow are retained.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Development
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Run npm run dev -- --port 3003 in C:/EverySpend-Website.
+Run npm run build for the static export, then node scripts/check-export.cjs to verify exported routes and assets.
+NEXT_PUBLIC_BASE_PATH supports GitHub Pages deployments.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Browser checks
 
-## Environment Variables
+Serve out/ locally and start Chrome with remote debugging enabled. Run node scripts/check-landing.cjs.
+The defaults are a site at http://127.0.0.1:3044 and a browser debugger at http://127.0.0.1:9333; override with QA_SITE_URL and QA_DEBUGGER_URL.
+Checks cover desktop/tablet/mobile widths, image loading, expense selection, setup choices, FAQs, reduced motion, and supporting routes. No contact request is sent.
+Optionally set QA_SCREENSHOT_DIR to an existing folder to save desktop and mobile previews.
 
-Create `.env.local` (already added in this workspace) and configure:
-
-```env
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-NEXT_PUBLIC_APP_DOWNLOAD_URL=https://play.google.com/store/apps/details?id=com.holdmint
-NEXT_PUBLIC_CONTACT_EMAIL=everyspendapp@gmail.com
-NEXT_PUBLIC_CONTACT_FORM_ENDPOINT=https://formsubmit.co/ajax/everyspendapp@gmail.com
-```
-
-Where these are used:
-
-- `src/lib/site.ts` reads `NEXT_PUBLIC_*` values for client/server URLs, contact email, and contact form endpoint.
-- `src/components/ContactFormCard.tsx` posts directly to the configured contact form endpoint (no mail app popup, no server route required).
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+The brand library remains in public/branding/, separate from the mobile app bundle. See docs/branding/README.md.

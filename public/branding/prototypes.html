@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en"><head><link rel="icon" type="image/png" href="./assets/images/icon.png"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>EverySpend · Icon studio</title>
+<style>
+:root{color-scheme:dark;--bg:#1C1C1C;--text:#E9E9E7;--muted:#9C9C99;--preview-size:clamp(300px,50vw,520px)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:13px/1.4 system-ui,sans-serif}
+main{max-width:1200px;margin:auto;padding:20px 24px 60px}header{display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1;background:var(--bg);padding:8px 0}
+h1{font-size:13px;font-weight:550;letter-spacing:.2px;margin:0}button,a{font:inherit}
+button{cursor:pointer;color:inherit}a{color:inherit;text-decoration:none}
+.download{padding:8px 12px;border:1px solid #ffffff12;border-radius:20px;font-size:11px}
+.preview{scroll-margin-top:12px}.stage{height:clamp(340px,62vh,620px);display:flex;align-items:center;justify-content:center;border-radius:24px}
+.stage img{width:var(--preview-size);height:var(--preview-size);max-width:100%;object-fit:contain}
+.stage img.compact{width:calc(var(--preview-size) * .68);height:calc(var(--preview-size) * .68);border-radius:20px}
+.controls{display:flex;align-items:center;justify-content:center;gap:10px;margin:0 0 32px}
+.surface{width:22px;height:22px;border-radius:50%;border:1px solid #ffffff22;padding:0;background:var(--surface)}
+.surface[aria-pressed=true]{outline:1px solid var(--text);outline-offset:3px}
+.motion-control{width:28px;height:28px;border:0;border-radius:50%;background:transparent;color:var(--muted);padding:0;font-size:12px}
+button:disabled{opacity:.35;cursor:default}
+button:focus-visible,a:focus-visible{outline:2px solid var(--text);outline-offset:5px}
+.filters{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin:0 0 28px}
+.filter{border:0;border-radius:20px;padding:8px 13px;background:transparent;color:var(--muted);font-size:11px}
+.filter[aria-pressed=true]{color:var(--text);background:#ffffff08}
+.gallery{display:flex;flex-wrap:wrap;justify-content:center;gap:24px 32px}
+.variant{width:112px;height:112px;display:flex;align-items:center;justify-content:center;border:1px solid transparent;border-radius:20px;background:transparent;padding:0}
+.variant[aria-pressed=true]{border-color:#E9E9E755;background:#ffffff04}
+.variant img{width:112px;height:112px;object-fit:contain;display:block;pointer-events:none}
+.variant img.compact{width:76px;height:76px;border-radius:14px}
+.variant:hover{background:#ffffff04}
+[hidden]{display:none!important}
+@media(max-width:520px){:root{--preview-size:360px}main{padding:16px 14px 40px}.stage{height:390px}.gallery{gap:16px}.variant{width:96px;height:96px}.variant img{width:96px;height:96px}.variant img.compact{width:65px;height:65px}}
+</style></head><body><main>
+<header><h1>EverySpend · Prototypes</h1><a href="index.html">Approved pouch ↗</a><a id="download" class="download" href="./assets/mascot/prototypes/pouch/default-b.png" download>Download PNG ↓</a></header>
+<div id="preview" class="preview"><div id="stage" class="stage"><img id="hero" src="./assets/mascot/prototypes/pouch/default-b.png" alt="Pocket · Prototype"></div></div>
+<div class="controls" aria-label="Preview controls">
+<button class="surface" data-color="#1C1C1C" style="--surface:#1C1C1C" aria-label="Graphite background" title="Graphite background" aria-pressed="true"></button>
+<button class="surface" data-color="#262626" style="--surface:#262626" aria-label="Card background" title="Card background" aria-pressed="false"></button>
+<button class="surface" data-color="#E9E9E7" style="--surface:#E9E9E7" aria-label="Light background" title="Light background" aria-pressed="false"></button>
+<button id="play" class="motion-control" aria-label="Play motion" title="Play motion">▶</button>
+<button id="stop" class="motion-control" aria-label="Stop motion" title="Stop motion">■</button>
+</div>
+<div class="filters" aria-label="Artwork groups">
+<button class="filter" data-group="all" aria-pressed="true">All</button>
+
+<button class="filter" data-group="icons" aria-pressed="false">Icons</button>
+<button class="filter" data-group="seasonal" aria-pressed="false">Seasonal</button>
+</div>
+<div id="gallery" class="gallery" aria-label="Choose artwork"></div>
+</main><script>const assets = {
+  "pouch-b": {
+    "key": "pouch-b",
+    "name": "Pocket \u00b7 B",
+    "group": "icons",
+    "src": "./assets/mascot/prototypes/pouch/default-b.png",
+    "motion": "settle"
+  },
+  "pouch-focus": {
+    "key": "pouch-focus",
+    "name": "Pocket \u00b7 Focus",
+    "group": "seasonal",
+    "src": "./assets/mascot/prototypes/pouch/focus.png",
+    "motion": "settle"
+  },
+  "receipt-a": {
+    "key": "receipt-a",
+    "name": "Slip \u00b7 A",
+    "group": "icons",
+    "src": "./assets/mascot/prototypes/receipt/icons/default-a.png",
+    "motion": "settle"
+  },
+  "receipt-b": {
+    "key": "receipt-b",
+    "name": "Slip \u00b7 B",
+    "group": "icons",
+    "src": "./assets/mascot/prototypes/receipt/icons/default-b.png",
+    "motion": "settle"
+  },
+  "receipt-diwali": {
+    "key": "receipt-diwali",
+    "name": "Slip \u00b7 Diwali",
+    "group": "seasonal",
+    "src": "./assets/mascot/prototypes/receipt/seasonal/diwali.png",
+    "motion": "settle"
+  },
+  "receipt-winter": {
+    "key": "receipt-winter",
+    "name": "Slip \u00b7 Winter",
+    "group": "seasonal",
+    "src": "./assets/mascot/prototypes/receipt/seasonal/winter.png",
+    "motion": "settle"
+  },
+  "receipt-offer": {
+    "key": "receipt-offer",
+    "name": "Slip \u00b7 Offer",
+    "group": "seasonal",
+    "src": "./assets/mascot/prototypes/receipt/seasonal/offer.png",
+    "motion": "settle"
+  },
+  "receipt-focus": {
+    "key": "receipt-focus",
+    "name": "Slip \u00b7 Focus",
+    "group": "seasonal",
+    "src": "./assets/mascot/prototypes/receipt/seasonal/focus.png",
+    "motion": "settle"
+  },
+  "piggy-a": {
+    "key": "piggy-a",
+    "name": "Penny \u00b7 A",
+    "group": "icons",
+    "src": "./assets/mascot/prototypes/piggy/icons/default-a.png",
+    "motion": "settle"
+  },
+  "piggy-b": {
+    "key": "piggy-b",
+    "name": "Penny \u00b7 B",
+    "group": "icons",
+    "src": "./assets/mascot/prototypes/piggy/icons/default-b.png",
+    "motion": "settle"
+  },
+  "piggy-diwali": {
+    "key": "piggy-diwali",
+    "name": "Penny \u00b7 Diwali",
+    "group": "seasonal",
+    "src": "./assets/mascot/prototypes/piggy/seasonal/diwali.png",
+    "motion": "settle"
+  },
+  "piggy-winter": {
+    "key": "piggy-winter",
+    "name": "Penny \u00b7 Winter",
+    "group": "seasonal",
+    "src": "./assets/mascot/prototypes/piggy/seasonal/winter.png",
+    "motion": "settle"
+  },
+  "piggy-offer": {
+    "key": "piggy-offer",
+    "name": "Penny \u00b7 Offer",
+    "group": "seasonal",
+    "src": "./assets/mascot/prototypes/piggy/seasonal/offer.png",
+    "motion": "settle"
+  },
+  "piggy-focus": {
+    "key": "piggy-focus",
+    "name": "Penny \u00b7 Focus",
+    "group": "seasonal",
+    "src": "./assets/mascot/prototypes/piggy/seasonal/focus.png",
+    "motion": "settle"
+  }
+};
+let selected="pouch-b";let playback;
+const reduced=matchMedia("(prefers-reduced-motion: reduce)");
+const hero=document.getElementById("hero");
+function stopMotion(){if(playback)playback.cancel();playback=undefined;}
+function entrance(){
+ if(reduced.matches)return;
+ playback=hero.animate([{opacity:.65,transform:"translateY(8px) scale(.97)"},{opacity:1,transform:"translateY(0) scale(1)"}],
+ {duration:180,easing:"cubic-bezier(0.23,1,0.32,1)"});
+}
+for(const asset of Object.values(assets)){
+ const button=document.createElement("button");
+ button.className="variant";button.dataset.key=asset.key;button.dataset.group=asset.group;
+ button.title=asset.name;button.setAttribute("aria-label",asset.name);button.setAttribute("aria-pressed","false");
+ button.innerHTML='<img class="'+(asset.group==="screens"?"":"compact")+'" loading="lazy" src="'+asset.src+'" alt="">';
+ button.addEventListener("click",()=>{
+  select(asset.key);entrance();
+  document.getElementById("preview").scrollIntoView({behavior:reduced.matches?"instant":"smooth",block:"start"});
+ });
+ document.getElementById("gallery").appendChild(button);
+}
+function select(key){
+ stopMotion();selected=key;const asset=assets[key];
+ hero.src=asset.src;hero.alt=asset.name;hero.className=asset.group==="screens"?"":"compact";
+ const download=document.getElementById("download");download.href=asset.src;download.setAttribute("aria-label","Download "+asset.name);
+ document.querySelectorAll(".variant").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.key===key)));
+ history.replaceState(null,"","#"+key);
+}
+function filter(group){
+ document.querySelectorAll(".variant").forEach(button=>button.hidden=group!=="all"&&button.dataset.group!==group);
+ document.querySelectorAll(".filter").forEach(button=>button.setAttribute("aria-pressed",String(button.dataset.group===group)));
+}
+document.querySelectorAll(".filter").forEach(button=>button.addEventListener("click",()=>filter(button.dataset.group)));
+document.querySelectorAll(".surface").forEach(button=>button.addEventListener("click",()=>{
+ document.getElementById("stage").style.backgroundColor=button.dataset.color;
+ document.querySelectorAll(".surface").forEach(item=>item.setAttribute("aria-pressed",String(item===button)));
+}));
+function updatePreference(){if(reduced.matches)stopMotion();document.getElementById("play").disabled=reduced.matches;}
+document.getElementById("play").addEventListener("click",()=>{
+ stopMotion();if(reduced.matches)return;
+ const motion=assets[selected].motion;
+ if(motion==="pulse")playback=hero.animate([{transform:"translateY(0) scale(1)"},{transform:"translateY(-3px) scale(1.025)",offset:.5},{transform:"translateY(0) scale(1)"}],
+ {duration:1200,iterations:Infinity,easing:"cubic-bezier(0.77,0,0.175,1)"});
+ else if(motion==="celebrate")playback=hero.animate([{transform:"translateY(0) scale(1)"},{transform:"translateY(-8px) scale(1.03)",offset:.4},{transform:"translateY(0) scale(1)"}],
+ {duration:500,easing:"cubic-bezier(0.77,0,0.175,1)"});
+ else entrance();
+});
+document.getElementById("stop").addEventListener("click",stopMotion);
+document.addEventListener("visibilitychange",()=>{if(document.hidden)stopMotion();});
+reduced.addEventListener("change",updatePreference);updatePreference();
+const initial=location.hash.slice(1);select(Object.hasOwn(assets,initial)?initial:"pouch-b");filter("all");
+</script></body></html>

@@ -98,7 +98,7 @@ export function ContactFormCard() {
   };
 
   return (
-    <div className="rounded-3xl border border-[var(--border)] bg-[var(--bg-surface)]/55 p-6 shadow-[0_16px_40px_-30px_rgba(0,0,0,0.75)] backdrop-blur-xl sm:p-8">
+    <div className="contact-form">
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="grid gap-5 sm:grid-cols-2">
           <label className="flex flex-col gap-2 text-sm">
@@ -180,12 +180,12 @@ export function ContactFormCard() {
           disabled={isSubmitting}
           className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-[var(--text-primary)] px-5 text-sm font-semibold text-[var(--bg-main)] transition-all hover:bg-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-[220px]"
         >
-          {isSubmitting ? "Sending..." : `Send to ${CONTACT_EMAIL}`}
+          {isSubmitting ? "Sending..." : "Send message"}
         </button>
 
         {submitState.tone !== "idle" && (
           <p
-            className={`text-xs font-medium ${
+            role="status" className={`text-xs font-medium ${
               submitState.tone === "success"
                 ? "text-[var(--success)]"
                 : "text-[var(--danger)]"

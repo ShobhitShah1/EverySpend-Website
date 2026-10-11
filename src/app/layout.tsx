@@ -1,8 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import { Poppins } from "next/font/google";
+import localFont from "next/font/local";
 import "./globals.css";
-import { ThemeProvider } from "@/components/ThemeProvider";
 import {
+  assetUrl,
   DEFAULT_OG_IMAGE,
   SITE_DESCRIPTION,
   SITE_NAME,
@@ -10,11 +10,14 @@ import {
   SITE_URL,
 } from "@/lib/site";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
-  subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+const bodyFont = localFont({
+  src: "../../public/fonts/AlbertSans.ttf",
+  display: "swap",
+  weight: "100 900",
+  variable: "--font-body",
 });
+
+const displayFont = localFont({ src: "../../public/fonts/Gelasio-Regular.ttf", display: "swap", variable: "--font-editorial" });
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
@@ -24,18 +27,18 @@ export const metadata: Metadata = {
   },
   description: SITE_DESCRIPTION,
   applicationName: SITE_NAME,
-  manifest: "/manifest.webmanifest",
+  manifest: assetUrl("/manifest.webmanifest"),
   icons: {
     icon: [
-      { url: "/icons/favicon-16.png", sizes: "16x16", type: "image/png" },
-      { url: "/icons/favicon-32.png", sizes: "32x32", type: "image/png" },
-      { url: "/icons/favicon-48.png", sizes: "48x48", type: "image/png" },
-      { url: "/icons/icon-192.png", sizes: "192x192", type: "image/png" },
+      { url: assetUrl("/icons/favicon-16.png"), sizes: "16x16", type: "image/png" },
+      { url: assetUrl("/icons/favicon-32.png"), sizes: "32x32", type: "image/png" },
+      { url: assetUrl("/icons/favicon-48.png"), sizes: "48x48", type: "image/png" },
+      { url: assetUrl("/icons/icon-192.png"), sizes: "192x192", type: "image/png" },
     ],
-    shortcut: "/icons/favicon-32.png",
+    shortcut: assetUrl("/icons/favicon-32.png"),
     apple: [
       {
-        url: "/icons/apple-touch-icon.png",
+        url: assetUrl("/icons/apple-touch-icon.png"),
         sizes: "180x180",
         type: "image/png",
       },
@@ -47,11 +50,9 @@ export const metadata: Metadata = {
   keywords: [
     "EverySpend",
     "expense tracker",
-    "SMS expense tracking",
-    "privacy first finance app",
-    "on device transaction parser",
-    "budgeting app",
-    "money manager",
+    "Android expense tracking",
+    "manual expense entry",
+    "optional SMS import",
   ],
   openGraph: {
     type: "website",
@@ -77,8 +78,8 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#1C1917",
-  colorScheme: "dark",
+  themeColor: "#fafaf9",
+  colorScheme: "light dark",
 };
 
 export default function RootLayout({
@@ -87,9 +88,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${poppins.variable} antialiased`}>
-        <ThemeProvider>{children}</ThemeProvider>
+    <html lang="en" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: "(function(){try{var t=localStorage.getItem('everyspend-theme');document.documentElement.dataset.theme=t==='dark'||t==='light'?t:matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}catch(e){document.documentElement.dataset.theme=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}})()" }} /></head>
+      <body className={bodyFont.variable + " " + displayFont.variable}>
+        {children}
       </body>
     </html>
   );

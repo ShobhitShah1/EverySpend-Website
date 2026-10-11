@@ -19,35 +19,34 @@ export default function TwitterImage() {
           display: "flex",
           flexDirection: "column",
           justifyContent: "space-between",
-          backgroundColor: "#1C1917",
-          backgroundImage:
-            "radial-gradient(circle at 10% 10%, rgba(187,182,179,0.28), transparent 40%), radial-gradient(circle at 100% 100%, rgba(167,243,208,0.2), transparent 45%)",
-          color: "#FAFAF9",
+          backgroundColor: "#fafaf9",
+          color: "#1c1c1c",
           padding: "56px",
-          fontFamily: "Poppins, Arial, sans-serif",
+          fontFamily: "Arial, sans-serif",
         }}
       >
-        <div style={{ fontSize: 24, color: "#D6D3D1" }}>EverySpend</div>
+        <div style={{ fontSize: 24, color: "#1c1c1c" }}>EverySpend</div>
         <div style={{ display: "flex", flexDirection: "column", gap: "8px" }}>
           <div
             style={{
               display: "flex",
               flexDirection: "column",
               fontSize: 72,
-              fontWeight: 700,
+              fontWeight: 400,
               lineHeight: 1.08,
+              fontFamily: "Arial, sans-serif",
             }}
           >
-            Expense tracking
+            A clearer view
             <br />
-            built for privacy.
+            of your money.
           </div>
-          <div style={{ fontSize: 30, color: "#A8A29E" }}>
-            On-device parsing. No cloud dependency.
+          <div style={{ fontSize: 28, color: "#62625f" }}>
+            Manual expense entry. Optional on-device SMS import.
           </div>
         </div>
-        <div style={{ fontSize: 22, color: "#BBB6B3" }}>
-          Track smarter. Save better.
+        <div style={{ fontSize: 20, color: "#62625f" }}>
+          An Android expense tracker.
         </div>
       </div>
     ),

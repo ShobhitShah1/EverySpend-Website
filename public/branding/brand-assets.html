@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" href="./assets/images/icon.png"><title>EverySpend · Brand assets</title>
+<style>
+:root{color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#1C1C1C;color:#E9E9E7;font:14px/1.5 system-ui,sans-serif}main{max-width:1100px;margin:auto;padding:24px 24px 64px}header,nav{display:flex;align-items:center;justify-content:space-between;gap:20px}header{margin-bottom:48px}h1,h2{font-size:14px;font-weight:550;margin:0}a,button{color:inherit;font:inherit;text-decoration:none}a:hover{text-decoration:underline}a:focus-visible,button:focus-visible{outline:2px solid #E9E9E7;outline-offset:4px}.banner{width:100%;display:block;border-radius:24px}.downloads{display:flex;justify-content:center;flex-wrap:wrap;gap:24px;margin:20px 0 48px;color:#A3A3A0;font-size:12px}.icons{display:flex;flex-wrap:wrap;justify-content:center;gap:48px;margin:32px 0}.icons img{width:160px;height:160px;object-fit:contain}.circle{border-radius:50%}.square{border-radius:36px}.wave{display:flex;align-items:center;justify-content:center;min-height:340px}.wave object{width:300px;height:300px;max-width:100%}button{border:1px solid #ffffff18;border-radius:24px;padding:8px 20px;cursor:pointer;background:transparent}.section-title{text-align:center;color:#A3A3A0}small{display:block;text-align:center;color:#8A8A86}@media(max-width:520px){header{align-items:flex-start;gap:12px}nav{gap:12px;flex-wrap:wrap;justify-content:flex-end}.icons{gap:20px}.icons img{width:112px;height:112px}}
+</style>
+</head>
+<body><main>
+<header><h1>EverySpend</h1><nav><a href="index.html">Pouch studio</a><a href="charts.html">Charts</a><a href="prototypes.html">Prototypes</a></nav></header>
+<img class="banner" src="./assets/store/play-store/feature-graphic-1024x500.png" width="1024" height="500" alt="EverySpend wordmark behind the centered smiling pouch, with AI, analytics and champion companions arranged on graphite.">
+<div class="downloads"><a href="./assets/store/play-store/feature-graphic-1024x500.png" download>Banner · 1024 × 500 ↓</a><a href="./assets/store/play-store/icon-512.png" download>Play Store icon · 512 × 512 ↓</a></div>
+<img class="banner" src="./assets/store/play-store/feature-graphic-alternative-1024x500.png" width="1024" height="500" alt="EverySpend with one centered smiling pouch, a charcoal circle and subtle sage edge on graphite.">
+<div class="downloads"><a href="./assets/store/play-store/feature-graphic-alternative-1024x500.png" download>Alternative banner · 1024 × 500 ↓</a></div>
+<h2 class="section-title">Launcher icons</h2>
+<div class="icons"><img class="circle" src="./assets/images/icon.png" alt="Centered pouch in a circular icon"><img class="square" src="./assets/images/icon.png" alt="Centered pouch in a rounded-square icon"><img src="./assets/images/icon.png" alt="Square Play Store icon"></div>
+<div class="downloads"><a href="./assets/images/icon.png" download>App icon · 1024 × 1024 ↓</a></div>
+<h2 class="section-title">A warm hello</h2>
+<div class="wave"><img src="./assets/images/splash-icon.png" width="240" height="240" alt="Pocket hugs a rupee coin and waves hello"></div>
+<div class="downloads"><a href="./assets/images/splash-icon.png" download>Splash mascot PNG ↓</a></div>
+<h2 class="section-title">Pocket says hello</h2>
+<div class="wave"><object id="wave" type="image/svg+xml" data="./assets/mascot/pouch/animations/hello.svg" aria-label="Pocket gives a short paw wave"><img src="./assets/mascot/pouch/screens/normal.png" width="300" height="300" alt="Pocket"></object></div>
+<div class="downloads"><button id="replay" type="button">Wave again</button><a href="./assets/mascot/pouch/animations/hello.svg" download>Animated SVG ↓</a></div>
+<small>One gentle greeting. Reduced motion respected.</small>
+</main><script>
+document.getElementById("replay").addEventListener("click", () => {
+  document.getElementById("wave").data = "./assets/mascot/pouch/animations/hello.svg?replay=" + Date.now();
+});
+</script></body></html>

@@ -13,7 +13,7 @@ export function EverySpendLanding() {
       <div className="single-nav"><Link href="/privacy">Privacy</Link><Link href="/contact">Contact</Link><ThemeToggle /></div>
     </header>
     <section className="single-intro" aria-labelledby="hero-title">
-      <h1 id="hero-title">EverySpend<span aria-hidden="true">✳</span></h1>
+      <h1 id="hero-title">EverySpend</h1>
       <div className="intro-details">
         <h2>A clearer view.<br /><em>A calmer you.</em></h2>
         <div className="intro-action">

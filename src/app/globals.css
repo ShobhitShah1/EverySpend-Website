@@ -74,7 +74,6 @@ html[data-theme=dark] { color-scheme:dark; --bg-main:#1c1c1c; --bg-surface:#2626
 .theme-toggle { display:grid; place-items:center; width:36px; height:36px; border:1px solid var(--border); border-radius:50%; background:transparent; color:var(--text-primary); }
 .single-intro { position:absolute; top:clamp(96px,12svh,152px); left:50%; transform:translateX(-50%); z-index:2; text-align:center; padding:0 20px; width:min(1440px,calc(100% - 64px)); }
 .single-intro h1 { position:relative; font-family:var(--font-body),sans-serif; font-size:clamp(70px,min(14.2vw,20svh),252px); font-weight:650; line-height:.95; letter-spacing:-.075em; margin:0 0 32px; text-wrap:nowrap; }
-.single-intro h1 span { display:inline-block; vertical-align:top; font-size:.22em; margin:.12em 0 0 .22em; font-weight:400; }
 .intro-details { display:flex; align-items:center; justify-content:space-between; gap:32px; text-align:left; max-width:1060px; margin:auto; padding-top:24px; border-top:1px solid var(--border); }
 .intro-details h2 { font-size:clamp(26px,3svh,38px); line-height:1.12; font-weight:500; letter-spacing:-.035em; margin:0; }
 .intro-details h2 em { font-family:var(--font-editorial),serif; font-weight:400; }

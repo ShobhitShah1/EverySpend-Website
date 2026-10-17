@@ -99,6 +99,7 @@ export function ContactFormCard() {
 
   return (
     <div className="contact-form">
+      <div className="contact-form-heading"><span className="document-eyebrow">Let’s talk</span><h2>Send us a note.</h2><p>Choose a subject and tell us what’s on your mind.</p></div>
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="grid gap-5 sm:grid-cols-2">
           <label className="flex flex-col gap-2 text-sm">
@@ -108,6 +109,8 @@ export function ContactFormCard() {
             <input
               required
               type="text"
+              autoComplete="name"
+              name="name"
               value={form.name}
               onChange={updateField("name")}
               disabled={isSubmitting}
@@ -122,6 +125,8 @@ export function ContactFormCard() {
             <input
               required
               type="email"
+              autoComplete="email"
+              name="email"
               value={form.email}
               onChange={updateField("email")}
               disabled={isSubmitting}
@@ -148,7 +153,7 @@ export function ContactFormCard() {
           </label>
           <label className="flex flex-col gap-2 text-sm">
             <span className="text-xs font-semibold uppercase tracking-[0.12em] text-[var(--text-secondary)]">
-              Topic
+              Topic <span className="field-optional">(optional)</span>
             </span>
             <input
               type="text"
@@ -171,14 +176,14 @@ export function ContactFormCard() {
             onChange={updateField("message")}
             disabled={isSubmitting}
             placeholder="Write your message..."
-            className="h-36 w-full resize-none rounded-xl border border-[var(--border)] bg-[var(--bg-main)] px-3 py-2 text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--primary)] disabled:opacity-70"
+            className="min-h-36 w-full resize-y rounded-xl border border-[var(--border)] bg-[var(--bg-main)] px-3 py-2 text-[var(--text-primary)] outline-none transition-colors focus:border-[var(--primary)] disabled:opacity-70"
           />
         </label>
 
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex h-12 w-full items-center justify-center rounded-xl bg-[var(--text-primary)] px-5 text-sm font-semibold text-[var(--bg-main)] transition-all hover:bg-[var(--primary)] disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto sm:min-w-[220px]"
+          className="contact-submit"
         >
           {isSubmitting ? "Sending..." : "Send message"}
         </button>

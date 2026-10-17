@@ -31,7 +31,6 @@ async function main() {
     await send("Emulation.setDeviceMetricsOverride", { width, height: 900, deviceScaleFactor: 1, mobile: false });
     await new Promise((resolve) => setTimeout(resolve, 150));
     const layout = await evaluate("({width:innerWidth, scroll:document.documentElement.scrollWidth, broken:[...document.images].filter(i=>!i.complete||!i.naturalWidth).map(i=>i.src)})");
-    assert.equal(await evaluate("document.documentElement.scrollHeight <= innerHeight"), true, "Vertical scroll at " + width);
     assert(layout.scroll <= width, "Horizontal overflow at " + width + ": " + layout.scroll);
     assert.deepEqual(layout.broken, [], "Broken image at " + width);
     if (process.env.QA_SCREENSHOT_DIR && (width === 1440 || width === 390)) {
@@ -64,19 +63,34 @@ async function main() {
   assert.equal(await evaluate("!!document.querySelector('.single-download .play-store-icon')"), true, "Google Play icon present");
   for (const [width, height] of [[2299, 1265], [1920, 1080], [320, 600], [390, 700], [430, 932], [768, 1024], [1440, 700]]) {
     await send("Emulation.setDeviceMetricsOverride", { width, height, deviceScaleFactor: 1, mobile: false });
-    assert.equal(await evaluate("(()=>{const image=document.querySelector('.bottom-pouch img');const box=image.getBoundingClientRect();const scale=Math.max(box.width/image.naturalWidth,box.height/image.naturalHeight);return image.naturalWidth*.25*scale <= innerWidth*.85})()"), true, "Pouch face fits viewport");
-    if (width > 900) {
-      const gap = await evaluate("document.querySelector('.bottom-pouch').getBoundingClientRect().top + document.querySelector('.bottom-pouch').clientHeight * .34 - document.querySelector('.single-download').getBoundingClientRect().bottom");
-      assert(gap >= 24, "Desktop artwork overlaps download: " + gap);
-      assert.equal(await evaluate("document.querySelector('.single-intro').getBoundingClientRect().top <= innerHeight*.18"), true, "Intro is too low");
-      assert.equal(await evaluate("document.querySelector('.single-intro').getBoundingClientRect().top >= document.querySelector('.single-header').getBoundingClientRect().bottom"), true, "Intro overlaps header");
-    }
-    assert.equal(await evaluate("document.documentElement.scrollHeight <= innerHeight && document.documentElement.scrollWidth <= innerWidth"), true, "Short viewport overflow");
-    assert.equal(await evaluate("document.querySelector('.single-download').getBoundingClientRect().bottom < document.querySelector('.bottom-pouch').getBoundingClientRect().top + document.querySelector('.bottom-pouch').clientHeight * .3"), true, "Download overlaps pouch rim at " + width + "x" + height + ": " + JSON.stringify(await evaluate("({button:document.querySelector(\'.single-download\').getBoundingClientRect().bottom,pouch:document.querySelector(\'.bottom-pouch\').getBoundingClientRect().top,height:document.querySelector(\'.bottom-pouch\').clientHeight})")));
+    const bounds = await evaluate("(()=>{const rect=s=>document.querySelector(s).getBoundingClientRect();const intro=rect('.single-intro'),image=rect('.bottom-pouch img'),art=rect('.bottom-pouch'),header=rect('.single-header');return {overflow:document.documentElement.scrollWidth>innerWidth,separate:intro.bottom<=art.top,belowHeader:intro.top>=header.bottom,faceFits:image.left+image.width*.38>=0&&image.left+image.width*.62<=innerWidth,ratio:image.width/image.height,loaded:document.querySelector('.bottom-pouch img').naturalWidth>0}})()");
+    assert.equal(bounds.overflow, false, "Horizontal overflow at " + width);
+    assert(bounds.separate, "Artwork overlaps content at " + width + "x" + height);
+    assert(bounds.belowHeader, "Wordmark overlaps header");
+    assert(bounds.faceFits, "Pouch face is cropped");
+    assert(bounds.loaded, "Pouch artwork did not load");
+    assert(Math.abs(bounds.ratio - 3) < .01, "Artwork is distorted");
   }
+  assert.equal(await evaluate("document.querySelectorAll('.pouch-eye').length"), 2, "Two independently animated eyes");
+  assert.equal(await evaluate("document.querySelectorAll('.pouch-eye-white').length"), 2, "Outer eye shapes stay fixed");
+  await send("Page.reload");
+  await new Promise((resolve) => setTimeout(resolve, 700));
+  let idleGlance = false;
+  for (let attempt = 0; attempt < 65; attempt++) {
+    idleGlance = await evaluate("(()=>{const value=document.querySelector('.pouch-pupil')?.style.transform;const offsets=value?.match(/-?[0-9.]+(?=px)/g)?.map(Number);return !!offsets&&offsets.some(n=>Math.abs(n)>2)})()");
+    if (idleGlance) break;
+    await new Promise((resolve) => setTimeout(resolve, 100));
+  }
+  assert(idleGlance, "Eyes glance around without pointer input");
+  assert.equal(await evaluate("getComputedStyle(document.querySelector('.pouch-eye')).animationName"), "pouch-blink", "Blink animation is active");
+  await send("Input.dispatchMouseEvent", { type: "mouseMoved", x: 40, y: 120 });
+  await new Promise((resolve) => setTimeout(resolve, 600));
+  assert.notEqual(await evaluate("document.querySelector('.pouch-pupil').style.transform"), "translate(0px, 0px)", "Eyes follow the pointer");
   await send("Emulation.setEmulatedMedia", { features: [{ name: "prefers-reduced-motion", value: "reduce" }] });
   await new Promise((resolve) => setTimeout(resolve, 150));
   assert.equal(await evaluate("getComputedStyle(document.querySelector('.single-download')).transitionDuration"), "0s");
+  assert.equal(await evaluate("getComputedStyle(document.querySelector('.pouch-eye')).animationName"), "none", "Reduced motion stops blinking");
+  assert.equal(await evaluate("document.querySelector('.pouch-pupil').style.transform"), "translate(0px, 0px)", "Reduced motion resets gaze");
   for (const route of ["privacy", "terms", "contact"]) {
     await send("Page.navigate", { url: siteUrl + "/" + route + "/" });
     await new Promise((resolve) => setTimeout(resolve, 350));
@@ -85,6 +99,6 @@ async function main() {
   }
   assert.deepEqual(errors, []);
   socket.close();
-  console.log("Passed: four viewport widths, loaded artwork, no-scroll landing, theme switching/persistence, reduced motion, and support routes. No form submitted.");
+  console.log("Passed: four viewport widths, loaded artwork, flowing landing, uncropped artwork and no text overlap, theme switching/persistence, reduced motion, and support routes. No form submitted.");
 }
 main().catch((error) => { console.error(error); process.exitCode = 1; process.exit(); });

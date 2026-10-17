@@ -16,8 +16,8 @@ for (const page of ["index.html", "privacy/index.html", "terms/index.html", "con
   }
 }
 const landing = fs.readFileSync(path.join(root, "index.html"), "utf8");
-assert(landing.includes('src="' + prefix + '/images/pouch-landing-body.png"'), "Pouch URL must include the deployment base path");
-assert(fs.existsSync(path.join(root, "images/pouch-landing-body.png")), "Pouch artwork must be exported");
+assert(landing.includes('src="' + prefix + '/images/pouch-animation-base.png"'), "Pouch URL must include the deployment base path");
+assert(fs.existsSync(path.join(root, "images/pouch-animation-base.png")), "Pouch artwork must be exported");
 const manifest = JSON.parse(fs.readFileSync(path.join(root, "manifest.webmanifest"), "utf8"));
 for (const icon of manifest.icons) {
   const file = icon.src.startsWith(prefix + "/") ? icon.src.slice(prefix.length) : icon.src;
